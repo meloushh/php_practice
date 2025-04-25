@@ -12,7 +12,7 @@ class Request {
     public array $postParams;
     public string $body;
     public array $headers;
-    public Protocol $protocol = Protocol::HTTP;
+    public string $protocol = 'http';
 }
 
 ?>

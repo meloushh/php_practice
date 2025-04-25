@@ -1,0 +1,115 @@
+:root {
+    --size1: 5px;
+    --size2: 15px;
+    --size3: 25px;
+    --size4: 35px;
+    --color1: #1a1a1a;
+    --color2: #b3836c;
+    --color3: #e75b5b;
+    --color4: #613a0e;
+    --color5: #301e09;
+}
+
+
+
+/* app */
+.bg-main {
+    background-color: var(--color1);
+}
+
+.bg-btn {
+    background-color: var(--color4);
+}
+
+.bg-btn:hover {
+    background-color: var(--color5);
+    cursor: pointer;
+}
+
+.border-main {
+    border-width: 2px;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: var(--color2);
+}
+
+
+
+/* elements */
+body {
+    font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+    font-size: 18px;
+    color: white;
+}
+
+textarea {
+    resize: vertical;
+}
+
+li {
+    margin-left: var(--size3);
+}
+
+
+
+/* classes */
+.block {
+    display: block;
+}
+
+.flex {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+
+.list-circle {
+    list-style: circle;
+}
+
+.list-disc {
+    list-style: disc;
+}
+
+
+
+/* margins */
+.my2 {
+    margin-top: var(--size2);
+    margin-bottom: var(--size2);
+}
+.mt2 { margin-top: var(--size2); }
+.mb2 { margin-bottom: var(--size2); }
+.ml2 { margin-left: var(--size2); }
+
+
+
+/* padding */
+.p1 { padding: var(--size1); }
+.px1 {
+    padding-left: var(--size1);
+    padding-right: var(--size1);
+}
+.py1 {
+    padding-top: var(--size1);
+    padding-bottom: var(--size1);
+}
+.p2 { padding: var(--size2); }
+.px2 {
+    padding-left: var(--size2);
+    padding-right: var(--size2);
+}
+.py2 {
+    padding-top: var(--size2);
+    padding-bottom: var(--size2);
+}
+.px3 {
+    padding-left: var(--size3);
+    padding-right: var(--size3);
+}
+.px4 {
+    padding-left: var(--size4);
+    padding-right: var(--size4);
+}

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'constants.php';
+require_once 'App.php';
 
 class Response {
     public string $body;
@@ -12,14 +13,25 @@ class Response {
         foreach ($this->headers as $key => $val) {
             header("{$key}: {$val}");
         }
-        echo $this->body;
     }
 }
 
 class HtmlResponse extends Response {
-    function __construct(string $body) {
-        $this->headers[CON_TYPE] = CON_TYPE_HTML;
-        $this->body = $body;
+    function __construct(public string $path, public array $data) {
+        $this->path = $path;
+        $this->data = $data;
+    }
+
+    function Send()
+    {
+        $data = $this->data;
+        require($this->path);
+    }
+}
+
+class RedirectResponse extends Response {
+    function __construct(public string $uri) {
+        $this->headers[HEADER_LOCATION] = $uri;
     }
 }
 
