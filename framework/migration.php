@@ -9,7 +9,7 @@ abstract class Migration {
 }
 
 class MigrationModel {
-    public function __construct(
+    function __construct(
         public string $class,
         public DateTime $executedAt
     ) {}

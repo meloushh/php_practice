@@ -7,30 +7,39 @@
     --color2: #b3836c;
     --color3: #e75b5b;
     --color4: #613a0e;
-    --color5: #301e09;
+    --color5: #2e251a;
+    --color6: #6c3030;
 }
 
 
 
 /* app */
-.bg-main {
+.test {
+    
+}
+
+.bg1 {
     background-color: var(--color1);
 }
 
-.bg-btn {
+.bg-btn1 {
     background-color: var(--color4);
 }
 
-.bg-btn:hover {
+.bg-btn1:hover {
     background-color: var(--color5);
     cursor: pointer;
 }
 
-.border-main {
+.border1 {
     border-width: 2px;
     border-radius: 4px;
     border-style: solid;
     border-color: var(--color2);
+}
+
+.btn-active {
+    background-color: var(--color6);
 }
 
 
@@ -53,6 +62,10 @@ li {
 
 
 /* classes */
+.w100 {
+    width: 100%;
+}
+
 .block {
     display: block;
 }

@@ -10,7 +10,7 @@ $app = new App(
     [
         MigrationOne::class
     ],
-    BASEDIR . '/life.sqlite'
+    BASEDIR . '/life_app/database.sqlite'
 );
 
 if (PHP_SAPI == 'cli') {

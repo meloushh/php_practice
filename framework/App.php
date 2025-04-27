@@ -1,9 +1,9 @@
 <?php
 
 require_once 'Request.php';
-require_once 'Response.php';
+require_once 'responses.php';
 require_once 'functions.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once BASEDIR.'/vendor/autoload.php';
 require_once 'Migrator.php';
 require_once 'DB.php';
 
@@ -75,27 +75,38 @@ class App {
     }
 
     function HandleCLI() {
+        $commands = ['migrate_up', 'migrate_down', 'db_reset'];
+
+        if (isset($_SERVER['argv'][1]) == false) {
+            echo 'Commands: ';
+            foreach ($commands as $command) {
+                echo $command;
+            }
+            return;
+        }
+
         $cmd = $_SERVER['argv'][1];
         switch ($cmd) {
-            case 'migrate_up': {
+            case  $commands[0]: {
                 $migrator = new Migrator($this->migrations);
                 $migrator->up();
                 break;
             }
             
-            case 'migrate_down':
+            case $commands[1]:
                 $migrator = new Migrator($this->migrations);
                 $migrator->down();
                 break;
 
-            case 'db_reset':
+            case $commands[2]:
                 $this->db->sqlite->close();
                 unlink($this->dbPath);
                 echo 'Deleted database '.$this->dbPath;
                 break;
 
             default:
-                throw new InvalidArgumentException("Command {$cmd} doesn't exist");
+                echo "Command '{$cmd}' doesn't exist";
+                break;
         }
     }
 }

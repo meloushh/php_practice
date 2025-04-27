@@ -28,11 +28,13 @@ class Migrator {
 
     function up() {
         $db = App::$inst->db;
-        $result = $db->Query("SELECT * FROM migrations");
+
         /** @var MigrationModel[] */
         $ranMigrations  = [];
-        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $ranMigrations[] = $row;
+
+        $result = $db->Query("SELECT * FROM migrations");
+        while ($row = $result->fetchArray(SQLITE3_NUM)) {
+            $ranMigrations[] = new MigrationModel($row[0], new DateTime($row[1]));
         }
 
         foreach ($this->migrationClasses as $migrationClass) {
@@ -42,8 +44,8 @@ class Migrator {
                 }
             }
 
-            /** @var Migration */
             $db->Exec("BEGIN TRANSACTION");
+            /** @var Migration */
             $inst = new $migrationClass();
             $inst->up();
             echo 'Executed migration ' . $migrationClass;

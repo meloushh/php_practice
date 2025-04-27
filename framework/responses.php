@@ -2,8 +2,9 @@
 
 require_once 'constants.php';
 require_once 'App.php';
+require_once 'HtmlEngine.php';
 
-class Response {
+abstract class Response {
     public string $body;
     public $headers;
     public $status = 200;
@@ -17,15 +18,13 @@ class Response {
 }
 
 class HtmlResponse extends Response {
-    function __construct(public string $path, public array $data) {
-        $this->path = $path;
-        $this->data = $data;
-    }
+    function __construct(
+        public string $path,
+        public array $data
+    ) {}
 
-    function Send()
-    {
-        $data = $this->data;
-        require($this->path);
+    function Send() {
+        HtmlEngine::RenderPage($this->path, $this->data);
     }
 }
 

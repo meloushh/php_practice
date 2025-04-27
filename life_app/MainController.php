@@ -1,22 +1,21 @@
 <?php
 
 require_once BASEDIR.'/framework/functions.php';
-require_once BASEDIR.'/framework/Response.php';
+require_once BASEDIR.'/framework/responses.php';
 require_once BASEDIR.'/life_app/models.php';
 
 class MainController {
-    public function Homepage() {
-        $documents = [];
-        $result = App::$inst->db->Query("SELECT * FROM documents");
-        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $documents[] = $row;
-        }
+    function Homepage() {
+        $docs = Document::GetAll();
 
-        $response = new HtmlResponse(__DIR__ . '/assets/homepage.php', ['documents' => $documents]);
+        $response = new HtmlResponse(__DIR__.'/assets/homepage.php', [
+            'documents' => $docs,
+            'doc_id' => 0
+        ]);
         $response->Send();
     }
 
-    public function CreateDocument() {
+    function CreateDocument() {
         $db = App::$inst->db;
         $db->Prepared("INSERT INTO documents VALUES (NULL, ?, ?)", App::$inst->request->postParams);
         $id = $db->sqlite->lastInsertRowID();
@@ -24,10 +23,28 @@ class MainController {
         $response->Send();
     }
 
-    public function Document(int $id) {
-        $doc = Document::GetOne($id);
-        if ($doc == null)
+    function GetDocument(int $id) {
+        $docs = Document::GetAll();
+        if (isset($docs[$id]) == false)
             throw new Exception("Document with id {$id} doesn't exist");
+
+        $response = new HtmlResponse(__DIR__.'/assets/homepage.php', [
+            'documents' => $docs,
+            'doc_id' => $id
+        ]);
+        $response->Send();
+    }
+
+    function UpdateDocument(int $id) {
+        $doc = Document::GetOne($id);
+        $req = App::$inst->request;
+        $doc->title = $req->postParams['title'];
+        $doc->content = $req->postParams['content'];
+        $doc->Update();
+
+        $req->headers['Message'] = 'Update successful';
+
+        new RedirectResponse($req->uri)->Send();
     }
 }
 
