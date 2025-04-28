@@ -5,12 +5,12 @@
  */
 ?>
 
-@extends('/life_app/assets/layout.php')
+@extends('/jinsei/assets/layout.php')
 
 @section_start('body')
 <div class="flex">
     <div id="col1" style="width: 25%;" class="p2">
-        <a href="/" class="block border1 bg-btn1 p2 py1">New</button>
+        <a href="/" class="block border1 bg-btn1 p2 py1">+ New</button>
 
         <?php foreach ($documents as $document): ?>
             <a href="/documents/<?= $document->id ?>" 
@@ -36,5 +36,5 @@
     </div>
 </div>
 
-<script src="/life_app/assets/homepage.js"></script>
+<script src="/jinsei/assets/homepage.js"></script>
 @section_end

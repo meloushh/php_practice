@@ -2,7 +2,7 @@
 
 require_once BASEDIR.'/framework/functions.php';
 require_once BASEDIR.'/framework/responses.php';
-require_once BASEDIR.'/life_app/models.php';
+require_once BASEDIR.'/jinsei/models.php';
 
 class MainController {
     function Homepage() {

@@ -2,15 +2,16 @@
 
 define('BASEDIR', __DIR__);
 require_once 'framework/App.php';
-require_once 'life_app/routes.php';
-require_once 'life_app/migrations/migrations.php';
+require_once 'jinsei/routes.php';
+require_once 'jinsei/migrations/migrations.php';
 
 $app = new App(
     $routes,
     [
         MigrationOne::class
     ],
-    BASEDIR . '/life_app/database.sqlite'
+    BASEDIR . '/jinsei/database.sqlite',
+    'Jinsei'
 );
 
 if (PHP_SAPI == 'cli') {

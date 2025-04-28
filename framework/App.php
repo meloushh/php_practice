@@ -32,7 +32,8 @@ class App {
     function __construct(
         public array $routes,
         public array $migrations,
-        public string $dbPath
+        public string $dbPath,
+        public string $name
     ) {
         App::$inst = $this;
         $this->db = new DB($this->dbPath);
