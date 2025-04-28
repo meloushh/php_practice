@@ -7,24 +7,35 @@
     --color2: #b3836c;
     --color3: #e75b5b;
     --color4: #613a0e;
-    --color5: #2e251a;
+    --color5: #3b3020;
     --color6: #6c3030;
 }
 
 
 
-/* app */
+/* components */
+.btn1 {
+    background-color: var(--color4);
+    border-width: 2px;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: var(--color2);
+    padding: var(--size2);
+}
+
+.btn1:hover {
+    background-color: var(--color5);
+    cursor: pointer;
+}
+
+
+/* colors */
 .bg1 {
     background-color: var(--color1);
 }
 
-.bg-btn1 {
-    background-color: var(--color4);
-}
-
-.bg-btn1:hover {
-    background-color: var(--color5);
-    cursor: pointer;
+.bg2 {
+    background-color: var(--color6);
 }
 
 .border1 {
@@ -32,10 +43,6 @@
     border-radius: 4px;
     border-style: solid;
     border-color: var(--color2);
-}
-
-.btn-active {
-    background-color: var(--color6);
 }
 
 
@@ -70,15 +77,31 @@ li {
     display: flex;
 }
 
+.justify_end {
+    justify-content: end;
+}
+
+.justify_center {
+    justify-content: center;
+}
+
+.align_center {
+    align-items: center;
+}
+
 .hidden {
     display: none;
 }
 
-.list-circle {
+.pos_absolute {
+    position: absolute;
+}
+
+.list_circle {
     list-style: circle;
 }
 
-.list-disc {
+.list_disc {
     list-style: disc;
 }
 
@@ -118,6 +141,7 @@ li {
     padding-left: var(--size3);
     padding-right: var(--size3);
 }
+.p4 { padding: var(--size4) }
 .px4 {
     padding-left: var(--size4);
     padding-right: var(--size4);

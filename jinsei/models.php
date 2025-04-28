@@ -27,7 +27,9 @@ class Model {
 
     function Update() {
         $db = App::$inst->db;
+        
         $query = 'UPDATE '.static::$table.' SET ';
+        
         $i = 0;
         foreach ($this->columns as $column) {
             if ($i > 0)
@@ -50,12 +52,17 @@ class Model {
         
         $db->Exec($query);
     }
+
+    function Delete() {
+        $db = App::$inst->db;
+        $query = 'DELETE FROM '.static::$table.' WHERE id = '.$this->id;
+        $db->Exec($query);
+    }
 }
 
 class Document extends Model {
     public static string $table = 'documents';
     protected array $columns = ['title', 'content'];
-
     public string $title;
     public string $content;
 

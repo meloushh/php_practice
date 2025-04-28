@@ -46,6 +46,13 @@ class MainController {
 
         new RedirectResponse($req->uri)->Send();
     }
+
+    function DeleteDocument($id) {
+        $doc = Document::GetOne($id);
+        $doc->Delete();
+
+        new RedirectResponse('documents');
+    }
 }
 
 ?>
