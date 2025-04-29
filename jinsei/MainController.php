@@ -8,7 +8,7 @@ class MainController {
     function Homepage() {
         $docs = Document::GetAll();
 
-        $response = new HtmlResponse(__DIR__.'/assets/homepage.php', [
+        $response = new HtmlResponse(__DIR__.'/frontend/homepage.php', [
             'documents' => $docs,
             'doc_id' => 0
         ]);
@@ -16,9 +16,10 @@ class MainController {
     }
 
     function CreateDocument() {
-        $db = App::$inst->db;
-        $db->Prepared("INSERT INTO documents VALUES (NULL, ?, ?)", App::$inst->request->postParams);
-        $id = $db->sqlite->lastInsertRowID();
+        $request = App::$inst->request;
+        $doc = new Document($request->postParams);
+        $id = $doc->Create();
+        
         $response = new RedirectResponse('documents/'.$id);
         $response->Send();
     }
@@ -28,7 +29,7 @@ class MainController {
         if (isset($docs[$id]) == false)
             throw new Exception("Document with id {$id} doesn't exist");
 
-        $response = new HtmlResponse(__DIR__.'/assets/homepage.php', [
+        $response = new HtmlResponse(__DIR__.'/frontend/homepage.php', [
             'documents' => $docs,
             'doc_id' => $id
         ]);
@@ -42,16 +43,15 @@ class MainController {
         $doc->content = $req->postParams['content'];
         $doc->Update();
 
-        $req->headers['Message'] = 'Update successful';
-
-        new RedirectResponse($req->uri)->Send();
+        $response = new RedirectResponse($req->uri);
+        $response->Send();
     }
 
     function DeleteDocument($id) {
         $doc = Document::GetOne($id);
         $doc->Delete();
 
-        new RedirectResponse('documents');
+        new RedirectResponse('documents')->Send();
     }
 }
 

@@ -5,8 +5,8 @@ require_once 'App.php';
 require_once 'HtmlEngine.php';
 
 abstract class Response {
-    public string $body;
-    public $headers;
+    public string $body = '';
+    public array $headers = [];
     public $status = 200;
 
     function Send() {
@@ -24,6 +24,7 @@ class HtmlResponse extends Response {
     ) {}
 
     function Send() {
+        parent::Send();
         HtmlEngine::RenderPage($this->path, $this->data);
     }
 }

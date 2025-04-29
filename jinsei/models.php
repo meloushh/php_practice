@@ -25,6 +25,22 @@ class Model {
         return $resultSet;
     }
 
+    function Create() {
+        $db = App::$inst->db;
+
+        $query = 'INSERT INTO '.static::$table.' VALUES (NULL';
+        
+        for ($i = 0; $i < count($this->columns); $i++) {
+            $query .= ', ?';
+        }
+        $query .= ')';
+
+        $data = $this->ColumnsToAssocArr();
+
+        $db->Prepared($query, $data);
+        return $db->sqlite->lastInsertRowID();
+    }
+
     function Update() {
         $db = App::$inst->db;
         
@@ -35,28 +51,28 @@ class Model {
             if ($i > 0)
                 $query .= ', ';
 
-            $query .= "{$column} = ";
-
-            switch (gettype($this->$column)) {
-                case 'string':
-                    $query .= "'{$this->$column}'";
-                    break;
-                case 'integer':
-                case 'double':
-                    $query .= $this->$column;
-                    break;
-            }
+            $query .= "{$column} = ?";
             $i++;
         }
         $query .= ' WHERE id = '.$this->id;
-        
-        $db->Exec($query);
+
+        $data = $this->ColumnsToAssocArr();
+
+        $db->Prepared($query, $data);
     }
 
     function Delete() {
         $db = App::$inst->db;
         $query = 'DELETE FROM '.static::$table.' WHERE id = '.$this->id;
         $db->Exec($query);
+    }
+
+    function ColumnsToAssocArr() : array {
+        $data = [];
+        foreach ($this->columns as $column) {
+            $data[$column] = $this->$column;
+        }
+        return $data;
     }
 }
 
@@ -67,7 +83,7 @@ class Document extends Model {
     public string $content;
 
     function __construct(array $data) {
-        $this->id = $data['id'];
+        $this->id = $data['id'] ?? 0;
         $this->title = $data['title'];
         $this->content = $data['content'];
     }

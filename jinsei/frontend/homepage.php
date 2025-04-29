@@ -5,7 +5,7 @@
  */
 ?>
 
-@extends('/jinsei/assets/layout.php')
+@extends('/jinsei/frontend/layout.php')
 
 @section_start('body')
 <div class="flex">
@@ -52,5 +52,5 @@
     </div>
 </div>
 
-<script src="/jinsei/assets/homepage.js"></script>
+<script src="/jinsei/frontend/homepage.js"></script>
 @section_end
