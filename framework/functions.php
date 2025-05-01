@@ -12,19 +12,19 @@ function Dump(... $vars) {
 }
 
 function Url($uri) {
-    return App::$inst->request->protocol . '://' . App::$inst->baseUrl . '/' . $uri;
+    return App::$inst->request->protocol . '://' . App::$inst->base_url . '/' . $uri;
 }
 
 function GetStringBetween(string $str, string $start, string $end, int $offset = 0) {
-    $startI = strpos($str, $start, $offset) + strlen($start);
-    if ($startI === false)
+    $start_i = strpos($str, $start, $offset) + strlen($start);
+    if ($start_i === false)
         throw new Exception("Failed to find start index");
 
-    $endI = strpos($str, $end, $startI);
-    if ($endI === false)
+    $end_i = strpos($str, $end, $start_i);
+    if ($end_i === false)
         throw new Exception('Failed to find end index');
 
-    return substr($str, $startI, $endI - $startI);
+    return substr($str, $start_i, $end_i - $start_i);
 }
 
 function strpos_exception(string $haystack, string $needle, int $offset = 0) {

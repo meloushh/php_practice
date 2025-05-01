@@ -6,19 +6,16 @@ require_once 'jinsei/routes.php';
 require_once 'jinsei/migrations/migrations.php';
 
 $app = new App(
-    $routes,
-    [
-        MigrationOne::class
+    routes: $routes,
+    migrations: [
+        CreateUsers::class,
+        CreateDocuments::class
     ],
-    BASEDIR . '/jinsei/database.sqlite',
-    'Jinsei'
+    db_path: BASEDIR . '/jinsei/database.sqlite',
+    name: 'Jinsei'
 );
 
-if (PHP_SAPI == 'cli') {
-    $app->HandleCLI();
-} else {
-    $app->HandleRequest();
-}
+$app->Run();
 
 
 ?>

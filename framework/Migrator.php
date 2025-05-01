@@ -6,13 +6,13 @@ require_once 'migration.php';
 
 class Migrator {
     /** @var string[] */
-    private array $migrationClasses;
+    private array $migrations_classes;
 
     /** 
-     * @param string[] $migrationClasses
+     * @param string[] $migration_classes
     */
-    function __construct($migrationClasses) {
-        $this->migrationClasses = $migrationClasses;
+    function __construct($migration_classes) {
+        $this->migrations_classes = $migration_classes;
 
         $db = App::$inst->db;
 
@@ -30,26 +30,32 @@ class Migrator {
         $db = App::$inst->db;
 
         /** @var MigrationModel[] */
-        $ranMigrations  = [];
+        $ran_migrations  = [];
 
         $result = $db->Query("SELECT * FROM migrations");
         while ($row = $result->fetchArray(SQLITE3_NUM)) {
-            $ranMigrations[] = new MigrationModel($row[0], new DateTime($row[1]));
+            $ran_migrations[] = new MigrationModel($row[0], new DateTime($row[1]));
         }
 
-        foreach ($this->migrationClasses as $migrationClass) {
-            foreach ($ranMigrations as $ranMigration) {
-                if ($ranMigration->class == $migrationClass) {
-                    continue;
+        foreach ($this->migrations_classes as $migration_class) {
+            $migration_ran = false;
+
+            foreach ($ran_migrations as $ran_migration) {
+                if ($ran_migration->class == $migration_class) {
+                    $migration_ran = true;
+                    break;
                 }
             }
 
+            if ($migration_ran)
+                continue;
+
             $db->Exec("BEGIN TRANSACTION");
             /** @var Migration */
-            $inst = new $migrationClass();
+            $inst = new $migration_class();
             $inst->up();
-            echo 'Executed migration ' . $migrationClass;
-            $db->Exec("INSERT INTO migrations VALUES ('{$migrationClass}', datetime())");
+            echo 'Executed migration ' . $migration_class;
+            $db->Exec("INSERT INTO migrations VALUES ('{$migration_class}', datetime())");
             $db->Exec("COMMIT");
         }
     }

@@ -3,12 +3,19 @@
     --size2: 15px;
     --size3: 25px;
     --size4: 35px;
+
     --color1: #1a1a1a;
     --color2: #b3836c;
     --color3: #e75b5b;
     --color4: #613a0e;
     --color5: #3b3020;
     --color6: #6c3030;
+
+    --fs1: 12px;
+    --fs2: 14px;
+    --fs3: 18px;
+    --fs4: 24px;
+    --fs5: 30px;
 }
 
 
@@ -50,7 +57,7 @@
 /* elements */
 body {
     font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
-    font-size: 18px;
+    font-size: var(--fs3);
     color: white;
 }
 
@@ -62,9 +69,38 @@ li {
     margin-left: var(--size3);
 }
 
+a {
+    text-decoration: underline;
+    color: #ff6464;
+}
+
+a:hover {
+    color: #b04646;
+}
+
+input {
+    color-scheme: dark;
+}
+
 
 
 /* classes */
+.fs4 {
+    font-size: var(--fs4);
+}
+
+.fs5 {
+    font-size: var(--fs5);
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
 .w100 {
     width: 100%;
 }
@@ -119,6 +155,7 @@ li {
 
 
 /* padding */
+.pl0 {  padding-left: 0 !important; }
 .p1 { padding: var(--size1); }
 .px1 {
     padding-left: var(--size1);

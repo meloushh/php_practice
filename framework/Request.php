@@ -8,8 +8,8 @@ enum Protocol {
 class Request {
     public string $uri;
     public string $method;
-    public array $getParams;
-    public array $postParams;
+    public array $get_params;
+    public array $post_params;
     public string $body;
     public array $headers;
     public string $protocol = 'http';

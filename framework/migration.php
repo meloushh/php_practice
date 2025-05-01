@@ -1,11 +1,8 @@
 <?php
 
 abstract class Migration {
-    function up() {
-    }
-
-    function down() {
-    }
+    abstract function up();
+    abstract function down();
 }
 
 class MigrationModel {
