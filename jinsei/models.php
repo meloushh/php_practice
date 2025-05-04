@@ -3,8 +3,8 @@
 require_once BASEDIR.'/framework/Model.php';
 
 class Document extends Model {
-    public static string $table = 'documents';
-    protected array $columns = ['title', 'content'];
+    static string $table = 'documents';
+    static array $columns = ['title', 'content'];
 
     public string $title;
     public string $content;
@@ -17,8 +17,8 @@ class Document extends Model {
 }
 
 class User extends Model {
-    public static string $table = 'users';
-    protected array $columns = ['email', 'password'];
+    static string $table = 'users';
+    static array $columns = ['email', 'password'];
 
     public string $email;
     public string $password;

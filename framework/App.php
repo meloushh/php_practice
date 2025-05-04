@@ -20,14 +20,15 @@ class App {
         public array $routes,
         public array $migrations,
         public string $db_path,
-        public string $name
+        public string $name,
+        public string $encryption_key_path = ''
     ) {
         App::$inst = $this;
         $this->db = new DB($this->db_path);
     }
 
     function Run() {
-        if (PHP_SAPI == 'cli') {
+        if (PHP_SAPI === 'cli') {
             $this->HandleCLI();
         } else {
             $this->HandleRequest();
@@ -71,14 +72,13 @@ class App {
     }
 
     function HandleCLI() {
-        $commands = ['migrate_up', 'migrate_down', 'db_drop'];
+        $commands = ['migrate_up', 'migrate_down', 'db_drop', 'encryption_make_key'];
 
-        if (isset($_SERVER['argv'][1]) == false) {
-            echo 'Commands: ';
+        if (isset($_SERVER['argv'][1]) === false) {
+            echo "COMMANDS: \n\r\n\r";
             $i = 0;
             foreach ($commands as $command) {
-                if ($i > 0) echo ', ';
-                echo $command;
+                echo $command."\n\r";
                 $i++;
             }
             return;
@@ -103,10 +103,49 @@ class App {
                 echo 'Deleted database '.$this->db_path;
                 break;
 
+            case $commands[3]:
+                $secret_key = sodium_crypto_secretbox_keygen();
+                echo sodium_bin2hex($secret_key);
+                break;
+
             default:
                 echo "Command '{$cmd}' doesn't exist";
                 break;
         }
+    }
+
+    function SetCookie(string $name, string $val, int $expires = 0) {
+        if (setcookie($name, $val, $expires, '/', '.'.$this->base_url) === false) {
+            throw new Exception("Failed to set cookie '{$name}'");
+        }
+    }
+
+    function DeleteCookieIfExists(string $name) {
+        if (isset($_COOKIE[$name])) {
+            unset($_COOKIE[$name]);
+            $this->SetCookie($name, '', time() - 10000);
+        }
+    }
+
+    function Encrypt($value) {
+        $path = $this->encryption_key_path;
+        $file = fopen($path, 'r');
+        if ($file === false) {
+            throw new Exception("Failed to open file '{$this->encryption_key_path}'");
+        }
+        $key = fread($file, filesize($path));
+        fclose($file);
+
+        $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+        $cipher = sodium_crypto_secretbox($value, $nonce, sodium_hex2bin($key));
+        $result = sodium_bin2base64($nonce.$cipher, SODIUM_BASE64_VARIANT_ORIGINAL);
+        if (is_string($value)) {
+            sodium_memzero($value);
+        }
+        sodium_memzero($nonce);
+        sodium_memzero($key);
+
+        return $result;
     }
 }
 

@@ -2,7 +2,7 @@
 
 @section_start('body')
 <div class="flex justify_center align_center" style="height: 100vh">
-    <div class="border1 p4" style="width: 50%">
+    <div class="border1 p4 w100" style="max-width: 600px">
         <p class="fs4 bold text-center">Register</p>
 
         <form action="/register" method="POST" style="display: grid; 

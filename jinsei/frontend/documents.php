@@ -14,7 +14,7 @@
 
         <?php foreach ($documents as $document): ?>
             <a href="/documents/<?= $document->id ?>" 
-                class="block btn1 mt2 <?= $doc_id == $document->id ? 'bg2' : '' ?>"
+                class="block btn1 mt2 <?= $doc_id===$document->id ? 'bg2' : '' ?>"
             >
                 <?= $document->title ?>
             </a>

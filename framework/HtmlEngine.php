@@ -4,7 +4,7 @@ require_once 'functions.php';
 
 class HtmlEngine {
     static function RenderPage(string $path, array $data) {
-        if (ob_start() == false) 
+        if (ob_start() === false) 
             throw new Exception('ob_start failed');
         
         extract($data);

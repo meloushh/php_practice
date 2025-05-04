@@ -18,7 +18,7 @@ class Migrator {
 
         $result = $db->Query("SELECT name FROM sqlite_master WHERE type='table' AND name='migrations';");
 
-        if ($result->fetchArray(SQLITE3_ASSOC) == false) {
+        if ($result->fetchArray(SQLITE3_ASSOC)===false) {
             $db->Exec('CREATE TABLE migrations (
                 class TEXT PRIMARY KEY,
                 executedAt TEXT NOT NULL
@@ -41,7 +41,7 @@ class Migrator {
             $migration_ran = false;
 
             foreach ($ran_migrations as $ran_migration) {
-                if ($ran_migration->class == $migration_class) {
+                if ($ran_migration->class===$migration_class) {
                     $migration_ran = true;
                     break;
                 }
@@ -54,7 +54,7 @@ class Migrator {
             /** @var Migration */
             $inst = new $migration_class();
             $inst->up();
-            echo 'Executed migration ' . $migration_class;
+            echo 'Executed migration ' . $migration_class . "\n\r";
             $db->Exec("INSERT INTO migrations VALUES ('{$migration_class}', datetime())");
             $db->Exec("COMMIT");
         }

@@ -45,6 +45,10 @@
     background-color: var(--color6);
 }
 
+.bg3 {
+    background-color: var(--color4);
+}
+
 .border1 {
     border-width: 2px;
     border-radius: 4px;
@@ -76,6 +80,15 @@ a {
 
 a:hover {
     color: #b04646;
+}
+
+a.block {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.block:hover {
+    color: inherit;
 }
 
 input {
@@ -143,19 +156,29 @@ input {
 
 
 
+@keyframes notification {
+    0%      { top: 0; opacity: 0.0; }
+    8%      { top: var(--size2); opacity: 1.0; }
+    92%     { top: var(--size2); opacity: 1.0; }
+    100%    { top: 0; opacity: 0.0; display: none; }
+}
+
+
+
 /* margins */
 .my2 {
     margin-top: var(--size2);
     margin-bottom: var(--size2);
 }
 .mt2 { margin-top: var(--size2); }
+.mr2 { margin-right: var(--size2); }
 .mb2 { margin-bottom: var(--size2); }
 .ml2 { margin-left: var(--size2); }
 
 
 
 /* padding */
-.pl0 {  padding-left: 0 !important; }
+.pl0 { padding-left: 0 !important; }
 .p1 { padding: var(--size1); }
 .px1 {
     padding-left: var(--size1);

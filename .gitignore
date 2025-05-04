@@ -1,2 +1,4 @@
 vendor
 *.sqlite
+jinsei/config.php
+jinsei/encryption_key.txt

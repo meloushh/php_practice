@@ -2,8 +2,8 @@
 
 class Model {
     static string $table = 'documents';
+    static array $columns = [];
     public int $id = 0;
-    protected array $columns = [];
 
     static function GetOne(string $suffix = '', array $suffix_data = []) {
         $db = App::$inst->db;
@@ -20,7 +20,7 @@ class Model {
             return new static($row);
         }
 
-        throw new Exception('Failed to fetch '.static::class.', query: "'.$query.'"');
+        return null;
     }
 
     static function GetAll() {
@@ -33,20 +33,20 @@ class Model {
         return $resultSet;
     }
 
-    function Create() {
+    static function Create(array $data) {
         $db = App::$inst->db;
 
         $query = 'INSERT INTO '.static::$table.' VALUES (NULL';
         
-        for ($i = 0; $i < count($this->columns); $i++) {
+        for ($i = 0; $i < count(static::$columns); $i++) {
             $query .= ', ?';
         }
         $query .= ')';
 
-        $data = $this->ColumnsToAssocArr();
-
         $db->Prepared($query, $data);
-        return $db->sqlite->lastInsertRowID();
+        $data['id'] = $db->sqlite->lastInsertRowID();
+        
+        return new static($data);
     }
 
     function Update() {

@@ -10,7 +10,7 @@ class DB {
     function Exec(string $sql) {
         // Dump($sql);
         $success = $this->sqlite->exec($sql);
-        if ($success == false) {
+        if ($success === false) {
             throw new Exception($this->sqlite->lastErrorMsg());
         }
     }
