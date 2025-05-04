@@ -127,25 +127,55 @@ class App {
         }
     }
 
-    function Encrypt($value) {
-        $path = $this->encryption_key_path;
-        $file = fopen($path, 'r');
-        if ($file === false) {
+    function Encrypt(string $value) {
+        $key = file_get_contents($this->encryption_key_path);
+        if ($key === false) {
             throw new Exception("Failed to open file '{$this->encryption_key_path}'");
         }
-        $key = fread($file, filesize($path));
-        fclose($file);
 
         $nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
         $cipher = sodium_crypto_secretbox($value, $nonce, sodium_hex2bin($key));
         $result = sodium_bin2base64($nonce.$cipher, SODIUM_BASE64_VARIANT_ORIGINAL);
-        if (is_string($value)) {
-            sodium_memzero($value);
-        }
-        sodium_memzero($nonce);
+
+        sodium_memzero($value);
         sodium_memzero($key);
+        sodium_memzero($nonce);
+        sodium_memzero($cipher);
 
         return $result;
+    }
+
+    function Decrypt(string $value) {
+        $key = file_get_contents($this->encryption_key_path);
+        if ($key === false) {
+            throw new Exception("Failed to open file '{$this->encryption_key_path}'");
+        }
+
+        $cipher = sodium_base642bin($value, SODIUM_BASE64_VARIANT_ORIGINAL);
+        $nonce = mb_substr($cipher, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, '8bit');
+        $text = mb_substr($cipher, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null, '8bit');
+
+        $plaintext = sodium_crypto_secretbox_open($text, $nonce, sodium_hex2bin($key));
+        if ($plaintext === false) {
+            throw new Exception("Failed to decrypt");
+        }
+
+        sodium_memzero($value);
+        sodium_memzero($key);
+        sodium_memzero($nonce);
+        sodium_memzero($cipher);
+
+        return $plaintext;
+    }
+
+    function GetAuthUserId() {
+        if (isset($_COOKIE['_a']) === false) {
+            throw new Exception('Failed '.__FUNCTION__);
+        }
+        $cookie = $_COOKIE['_a'];
+        $val = $this->Decrypt($cookie);
+
+        return (int)$val;
     }
 }
 

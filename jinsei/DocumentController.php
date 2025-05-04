@@ -3,8 +3,16 @@
 require_once 'models.php';
 
 class DocumentController {
+    protected int $auth_user_id = 0;
+
+
+
+    function __construct() {
+        $this->auth_user_id = App::$inst->GetAuthUserId();
+    }
+
     function PageAllDocs() {
-        $docs = Document::GetAll();
+        $docs = Document::GetAll('WHERE user_id = ?', [$this->auth_user_id]);
 
         return new HtmlResponse(__DIR__.'/frontend/documents.php', [
             'documents' => $docs,
@@ -14,22 +22,24 @@ class DocumentController {
 
     function Create() {
         $request = App::$inst->request;
-        $doc = Document::Create($request->post_params);
+
+        $data = $request->post_params;
+        $data['user_id'] = $this->auth_user_id;
+        $doc = Document::Create($data);
         
-        $response = new RedirectResponse('/documents/'.$doc->id);
-        return $response->Send();
+        return new RedirectResponse('/documents/'.$doc->id)->Send();
     }
 
     function PageOneDoc(int $id) {
-        $docs = Document::GetAll();
+        $docs = Document::GetAll('WHERE user_id = ?', [$this->auth_user_id]);
+        
         if (isset($docs[$id])===false)
             throw new Exception("Document with id {$id} doesn't exist");
 
-        $response = new HtmlResponse(__DIR__.'/frontend/homepage.php', [
+        return new HtmlResponse(__DIR__.'/frontend/homepage.php', [
             'documents' => $docs,
             'doc_id' => $id
-        ]);
-        return $response->Send();
+        ])->Send();
     }
 
     function Update(int $id) {

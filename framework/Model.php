@@ -9,13 +9,12 @@ class Model {
         $db = App::$inst->db;
 
         $query = 'SELECT * FROM '.static::$table;
-
         $suffix = trim($suffix);
         if (strlen($suffix) > 0) {
             $query.= " {$suffix}";
         }
-
         $result = $db->Prepared($query, $suffix_data);
+
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             return new static($row);
         }
@@ -23,10 +22,17 @@ class Model {
         return null;
     }
 
-    static function GetAll() {
+    static function GetAll(string $suffix = '', array $suffix_data = []) {
         $db = App::$inst->db;
+
+        $query = 'SELECT * FROM '.static::$table;
+        $suffix = trim($suffix);
+        if (strlen($suffix) > 0) {
+            $query.= " {$suffix}";
+        }
+        $result = $db->Prepared($query, $suffix_data);
+
         $resultSet = [];
-        $result = $db->Query('SELECT * FROM '.static::$table);
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
             $resultSet[$row['id']] = new static($row);
         }
