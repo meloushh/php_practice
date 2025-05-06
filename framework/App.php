@@ -138,16 +138,13 @@ class App {
     }
 
     function SetCookie(string $name, string $val, int $expires = 0) {
-        if (setcookie($name, $val, $expires, '/', '.'.$this->base_url) === false) {
+        if (setcookie($name, $val, $expires) === false) {
             throw new Exception("Failed to set cookie '{$name}'");
         }
     }
 
-    function DeleteCookieIfExists(string $name) {
-        if (isset($_COOKIE[$name])) {
-            unset($_COOKIE[$name]);
-            $this->SetCookie($name, '', time() - 10000);
-        }
+    function DeleteCookie(string $name) {
+        $this->SetCookie($name, '', time() - 10000);
     }
 
     function Encrypt(string $value) {

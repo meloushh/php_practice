@@ -4,6 +4,13 @@ require_once 'functions.php';
 
 class HtmlEngine {
     static function RenderPage(string $path, array $data) {
+        $message = '';
+        if (isset($_COOKIE['message'])) {
+            $message = $_COOKIE['message'];
+            unset($_COOKIE['message']);
+            App::$si->DeleteCookie('message');
+        }
+
         if (ob_start() === false) 
             throw new Exception('ob_start failed');
         

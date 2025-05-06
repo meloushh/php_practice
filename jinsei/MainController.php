@@ -4,18 +4,17 @@ require_once 'models.php';
 
 class MainController {
     function Homepage() {
-        $response = new HtmlResponse(__DIR__.'/frontend/homepage.php', []);
-        return $response->Send();
+        return new HtmlResponse(__DIR__.'/frontend/homepage.php', [])->Send();
     }
 
     function Login() {
         $req = App::$si->request;
 
         $user = User::GetOne('WHERE email = ?', [$req->post_params['email']]);
-        if ($user === null) {
-            return new RedirectResponse('/', 'Invalid credentials')->Send();
-        }
-        if (password_verify($req->post_params['password'], $user->password) === false) {
+        
+        if ($user === null
+            || password_verify($req->post_params['password'], $user->password) === false
+        ) {
             return new RedirectResponse('/', 'Invalid credentials')->Send();
         }
 
@@ -25,8 +24,7 @@ class MainController {
     }
 
     function PageRegister() {
-        $response = new HtmlResponse(__DIR__.'/frontend/register.php', []);
-        return $response->Send();
+        return new HtmlResponse(__DIR__.'/frontend/register.php', [])->Send();
     }
 
     function Register() {

@@ -1,9 +1,5 @@
 <?php
-$message = '';
-if (isset($_COOKIE['message'])) {
-    $message = $_COOKIE['message'];
-    App::$si->DeleteCookieIfExists('message');
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +11,7 @@ if (isset($_COOKIE['message'])) {
 <body class="bg1">
 @section('body')
 
-<?php if (strlen($message) > 0): ?>
+<?php if (isset($message) && strlen($message) > 0): ?>
 
     <div id="notification" class="pos_absolute border1 bg2 p4"
         style="top: 0; left: 0; right: 0; margin-inline: auto; width: fit-content;
