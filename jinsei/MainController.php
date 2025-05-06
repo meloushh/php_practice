@@ -9,7 +9,7 @@ class MainController {
     }
 
     function Login() {
-        $req = App::$inst->request;
+        $req = App::$si->request;
 
         $user = User::GetOne('WHERE email = ?', [$req->post_params['email']]);
         if ($user === null) {
@@ -19,8 +19,8 @@ class MainController {
             return new RedirectResponse('/', 'Invalid credentials')->Send();
         }
 
-        $result = App::$inst->Encrypt($user->id);
-        App::$inst->SetCookie('_a', $result, 0);
+        $result = App::$si->Encrypt($user->id);
+        App::$si->SetCookie('_a', $result, 0);
         return new RedirectResponse('/documents')->Send();
     }
 
@@ -30,7 +30,7 @@ class MainController {
     }
 
     function Register() {
-        $req = App::$inst->request;
+        $req = App::$si->request;
 
         if ($req->post_params['password'] !== $req->post_params['repeat_password']) {
             return new RedirectResponse('/register', 'Passwords don\'t match')->Send();

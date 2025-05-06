@@ -12,7 +12,7 @@ function Dump(... $vars) {
 }
 
 function Url($uri) {
-    return App::$inst->request->protocol . '://' . App::$inst->base_url . '/' . $uri;
+    return App::$si->request->protocol . '://' . App::$si->base_url . '/' . $uri;
 }
 
 function GetStringBetween(string $str, string $start, string $end, int $offset = 0) {

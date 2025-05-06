@@ -8,44 +8,67 @@ require_once 'Response.php';
 require_once 'Migrator.php';
 require_once 'DB.php';
 
+function SetupErrorHandling() {
+    set_error_handler('ErrorHandler');
+    set_exception_handler('ExceptionHandler');
+}
+
+function ExceptionHandler(Throwable $e): void {
+    DumpDie($e);
+}
+
+function ErrorHandler(int $errno, string $errstr, string $errfile = '', 
+    int $errline = 0, array $errcontext = []): bool 
+{
+    DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
+}
+
 class App {
-    public static App $inst;
+    public static App $si;
+    
+
+
     public Request $request;
     public DB $db;
     public string $base_url;
-
-
 
     function __construct(
         public array $routes,
         public array $migrations,
         public string $db_path,
         public string $name,
-        public string $encryption_key_path = ''
+        public string $encryption_key_path = '',
+        ?Request $request = null,
     ) {
-        App::$inst = $this;
+        App::$si = $this;
+
         $this->db = new DB($this->db_path);
+        if ($request !== null) {
+            $this->request = $request;
+        }
     }
 
     function Run() {
         if (PHP_SAPI === 'cli') {
-            $this->HandleCLI();
+            $this->RunCLI();
         } else {
-            $this->HandleRequest();
+            $this->RunWeb();
         }
     }
 
-    function HandleRequest() {
+    function RunWeb() {
         $this->base_url = $_SERVER['SERVER_NAME'];
 
-        $this->request = new Request();
-        $this->request->method = $_SERVER['REQUEST_METHOD'];
-        $this->request->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $this->request->headers = getallheaders();
-        $this->request->get_params = $_GET;
-        $this->request->post_params = $_POST;
-        $this->request->protocol = str_contains($_SERVER['SERVER_PROTOCOL'], 'HTTP/') ? 'http' : 'https';
-        $this->request->body = file_get_contents('php://input');
+        if (isset($this->request) === false) {
+            $this->request = new Request();
+            $this->request->method = $_SERVER['REQUEST_METHOD'];
+            $this->request->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $this->request->headers = getallheaders();
+            $this->request->get_params = $_GET;
+            $this->request->post_params = $_POST;
+            $this->request->protocol = str_contains($_SERVER['SERVER_PROTOCOL'], 'HTTP/') ? 'http' : 'https';
+            $this->request->body = file_get_contents('php://input');
+        }
 
         // routing
         $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
@@ -71,7 +94,7 @@ class App {
         }
     }
 
-    function HandleCLI() {
+    function RunCLI() {
         $commands = ['migrate_up', 'migrate_down', 'db_drop', 'encryption_make_key'];
 
         if (isset($_SERVER['argv'][1]) === false) {
@@ -170,7 +193,7 @@ class App {
 
     function GetAuthUserId() {
         if (isset($_COOKIE['_a']) === false) {
-            throw new Exception('Failed '.__FUNCTION__);
+            return 0;
         }
         $cookie = $_COOKIE['_a'];
         $val = $this->Decrypt($cookie);

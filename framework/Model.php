@@ -6,7 +6,7 @@ class Model {
     public int $id = 0;
 
     static function GetOne(string $suffix = '', array $suffix_data = []) {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $query = 'SELECT * FROM '.static::$table;
         $suffix = trim($suffix);
@@ -23,7 +23,7 @@ class Model {
     }
 
     static function GetAll(string $suffix = '', array $suffix_data = []) {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $query = 'SELECT * FROM '.static::$table;
         $suffix = trim($suffix);
@@ -40,7 +40,7 @@ class Model {
     }
 
     static function Create(array $data) {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $query = 'INSERT INTO '.static::$table.' VALUES (NULL';
         
@@ -56,7 +56,7 @@ class Model {
     }
 
     function Update() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
         
         $query = 'UPDATE '.static::$table.' SET ';
         
@@ -76,7 +76,7 @@ class Model {
     }
 
     function Delete() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
         $query = 'DELETE FROM '.static::$table.' WHERE id = '.$this->id;
         $db->Exec($query);
     }

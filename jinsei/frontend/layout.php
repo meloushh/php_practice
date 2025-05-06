@@ -2,7 +2,7 @@
 $message = '';
 if (isset($_COOKIE['message'])) {
     $message = $_COOKIE['message'];
-    App::$inst->DeleteCookieIfExists('message');
+    App::$si->DeleteCookieIfExists('message');
 }
 ?>
 
@@ -10,7 +10,7 @@ if (isset($_COOKIE['message'])) {
 <html lang="en">
 <link rel="stylesheet" type="text/css" href="/jinsei/frontend/reset.css">
 <link rel="stylesheet" type="text/css" href="/jinsei/frontend/app.css">
-<title><?= App::$inst->name ?></title>
+<title><?= App::$si->name ?></title>
 </head>
 <body class="bg1">
 @section('body')

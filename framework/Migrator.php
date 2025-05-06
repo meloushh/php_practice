@@ -14,7 +14,7 @@ class Migrator {
     function __construct($migration_classes) {
         $this->migrations_classes = $migration_classes;
 
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $result = $db->Query("SELECT name FROM sqlite_master WHERE type='table' AND name='migrations';");
 
@@ -27,7 +27,7 @@ class Migrator {
     }
 
     function up() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         /** @var MigrationModel[] */
         $ran_migrations  = [];

@@ -3,6 +3,10 @@
 define('BASEDIR', __DIR__);
 
 require_once 'framework/App.php';
+
+// Do this now cause there might be an error while setting up App construction params
+SetupErrorHandling();
+
 require_once 'jinsei/routes.php';
 require_once 'jinsei/migrations/migrations.php';
 require_once 'jinsei/config.php';

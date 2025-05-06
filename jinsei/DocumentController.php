@@ -8,7 +8,11 @@ class DocumentController {
 
 
     function __construct() {
-        $this->auth_user_id = App::$inst->GetAuthUserId();
+        $this->auth_user_id = App::$si->GetAuthUserId();
+        
+        if ($this->auth_user_id === 0) {
+            throw new Exception('Unauthenticated');
+        }
     }
 
     function PageAllDocs() {
@@ -21,7 +25,7 @@ class DocumentController {
     }
 
     function Create() {
-        $request = App::$inst->request;
+        $request = App::$si->request;
 
         $data = $request->post_params;
         $data['user_id'] = $this->auth_user_id;
@@ -44,7 +48,7 @@ class DocumentController {
 
     function Update(int $id) {
         $doc = Document::GetOne('WHERE id = ?', [$id]);
-        $req = App::$inst->request;
+        $req = App::$si->request;
         $doc->title = $req->post_params['title'];
         $doc->content = $req->post_params['content'];
         $doc->Update();

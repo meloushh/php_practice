@@ -24,18 +24,6 @@ class DB {
         return $result;
     }
 
-    function GetArgType($arg) {
-        switch (gettype($arg)) {
-            case 'double': return SQLITE3_FLOAT;
-            case 'integer': return SQLITE3_INTEGER;
-            case 'boolean': return SQLITE3_INTEGER;
-            case 'NULL': return SQLITE3_NULL;
-            case 'string': return SQLITE3_TEXT;
-            default:
-                throw new InvalidArgumentException('Argument is of invalid type '.gettype($arg));
-        }
-    }
-
     function Prepared(string $sql, array $params) {
         $statement = $this->sqlite->prepare($sql);
         $i = 1;
@@ -48,6 +36,20 @@ class DB {
             throw new Exception($this->sqlite->lastErrorMsg());
         }
         return $result;
+    }
+
+    
+    
+    protected function GetArgType($arg) {
+        switch (gettype($arg)) {
+            case 'double': return SQLITE3_FLOAT;
+            case 'integer': return SQLITE3_INTEGER;
+            case 'boolean': return SQLITE3_INTEGER;
+            case 'NULL': return SQLITE3_NULL;
+            case 'string': return SQLITE3_TEXT;
+            default:
+                throw new InvalidArgumentException('Argument is of invalid type '.gettype($arg));
+        }
     }
 }
 

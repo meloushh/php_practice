@@ -40,6 +40,7 @@
     </div>
 </div>
 
+<?php if($doc_id > 0): ?>
 <div id="confirmation_window" class="hidden pos_absolute flex justify_center align_center" 
     style="width: 100%; height: 100vh; top: 0; left: 0">
 
@@ -51,6 +52,7 @@
         </form>
     </div>
 </div>
+<?php endif ?>
 
 <script src="/jinsei/frontend/homepage.js"></script>
 @section_end

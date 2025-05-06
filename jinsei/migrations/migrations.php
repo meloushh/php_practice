@@ -4,7 +4,7 @@ require_once BASEDIR.'/framework/Migration.php';
 
 class CreateUsers extends Migration {
     function up() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $db->Exec('CREATE TABLE users (
                 id INTEGER PRIMARY KEY,
@@ -15,14 +15,14 @@ class CreateUsers extends Migration {
     }
 
     function down() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
         $db->Exec('DROP TABLE users;');
     }
 }
 
 class CreateDocuments extends Migration {
     function up() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
 
         $db->Exec('CREATE TABLE documents (
                 id INTEGER PRIMARY KEY,
@@ -36,7 +36,7 @@ class CreateDocuments extends Migration {
     }
 
     function down() {
-        $db = App::$inst->db;
+        $db = App::$si->db;
         $db->Exec('DROP TABLE documents;');
     }
 }
