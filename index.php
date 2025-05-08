@@ -1,6 +1,7 @@
 <?php
 
 define('BASEDIR', __DIR__);
+define('FE_DIR', __DIR__.'/jinsei/frontend');
 
 require_once 'framework/App.php';
 

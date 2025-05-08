@@ -1,4 +1,4 @@
-@extends('/jinsei/frontend/layout.php')
+@extends('/jinsei/frontend/web_template.php')
 
 @section_start('body')
 <div class="flex justify_center align_center" style="height: 100vh">
@@ -19,7 +19,7 @@
             <input type="submit" value="Login" class="btn1">
         </form>
 
-        <p>
+        <p class="text-center">
             <a href="/register">Register</a>
         </p>
     </div>

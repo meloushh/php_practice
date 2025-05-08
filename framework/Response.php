@@ -24,7 +24,7 @@ class HtmlResponse extends Response {
     ) {}
 
     function Send() {
-        HtmlEngine::RenderPage($this->path, $this->data);
+        HtmlEngine::Render($this->path, $this->data);
     }
 }
 

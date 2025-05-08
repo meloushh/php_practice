@@ -33,11 +33,11 @@ class App {
     public string $base_url;
 
     function __construct(
-        public array $routes,
-        public array $migrations,
-        public string $db_path,
-        public string $name,
-        public string $encryption_key_path = '',
+        protected array $routes,
+        protected array $migrations = [],
+        protected string $db_path = '',
+        public string $name = 'AppName',
+        protected string $encryption_key_path = '',
         ?Request $request = null,
     ) {
         App::$si = $this;
@@ -197,6 +197,7 @@ class App {
 
         return (int)$val;
     }
+
 }
 
 ?>

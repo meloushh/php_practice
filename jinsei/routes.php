@@ -5,7 +5,7 @@ require_once 'MainController.php';
 require_once 'DocumentController.php';
 
 $routes = [
-    new Route(['GET'], '/', [MainController::class, 'Homepage']),
+    new Route(['GET'], '/', [MainController::class, 'PageHome']),
     new Route(['POST'], '/login', [MainController::class, 'Login']),
     new Route(['GET'], '/register', [MainController::class, 'PageRegister']),
     new Route(['POST'], '/register', [MainController::class, 'Register']),

@@ -5,7 +5,7 @@
  */
 ?>
 
-@extends('/jinsei/frontend/layout.php')
+@extends('/jinsei/frontend/web_template.php')
 
 @section_start('body')
 <div class="flex">

@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" type="text/css" href="/jinsei/frontend/reset.css">

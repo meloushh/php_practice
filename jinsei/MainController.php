@@ -3,7 +3,7 @@
 require_once 'models.php';
 
 class MainController {
-    function Homepage() {
+    function PageHome() {
         return new HtmlResponse(__DIR__.'/frontend/homepage.php', [])->Send();
     }
 

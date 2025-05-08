@@ -3,7 +3,7 @@
 require_once 'functions.php';
 
 class HtmlEngine {
-    static function RenderPage(string $path, array $data) {
+    static function Render(string $path, array $data, bool $return_no_out = false) {
         $message = '';
         if (isset($_COOKIE['message'])) {
             $message = $_COOKIE['message'];
@@ -52,7 +52,11 @@ class HtmlEngine {
             $output = str_replace($search, $content, $output);
         }
 
-        echo $output;
+        if ($return_no_out) {
+            return $output;
+        } else {
+            echo $output;
+        }
     }
 }
 
