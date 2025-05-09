@@ -1,9 +1,6 @@
 <?php
 
-enum Protocol {
-    case HTTP;
-    case HTTPS;
-}
+namespace Framework;
 
 class Request {
     public string $uri;

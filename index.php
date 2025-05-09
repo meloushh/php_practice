@@ -3,14 +3,14 @@
 define('BASEDIR', __DIR__);
 define('FE_DIR', __DIR__.'/jinsei/frontend');
 
-require_once 'framework/App.php';
+require_once BASEDIR.'/vendor/autoload.php';
 
 // Do this now cause there might be an error while setting up App construction params
-SetupErrorHandling();
+Framework\SetupErrorHandling();
 
-require_once 'jinsei/routes.php';
-require_once 'jinsei/migrations/migrations.php';
-require_once 'jinsei/config.php';
+require_once BASEDIR.'/jinsei/routes.php';
+require_once BASEDIR.'/jinsei/migrations/migrations.php';
+use Framework\App;
 
 $app = new App(
     routes: $routes,

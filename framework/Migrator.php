@@ -1,8 +1,11 @@
 <?php
 
-require_once 'App.php';
-require_once 'migration.php';
+namespace Framework;
 
+use Framework\App;
+use Migration;
+use MigrationDBModel;
+use DateTime;
 
 class Migrator {
     /** @var string[] */
@@ -29,12 +32,12 @@ class Migrator {
     function up() {
         $db = App::$si->db;
 
-        /** @var MigrationModel[] */
+        /** @var MigrationDBModel[] */
         $ran_migrations  = [];
 
         $result = $db->Query("SELECT * FROM migrations");
         while ($row = $result->fetchArray(SQLITE3_NUM)) {
-            $ran_migrations[] = new MigrationModel($row[0], new DateTime($row[1]));
+            $ran_migrations[] = new MigrationDBModel($row[0], new DateTime($row[1]));
         }
 
         foreach ($this->migrations_classes as $migration_class) {
