@@ -1,8 +1,8 @@
 <?php
 
-require_once BASEDIR.'/framework/Route.php';
 require_once 'MainController.php';
 require_once 'DocumentController.php';
+use Framework\Route;
 
 $routes = [
     new Route(['GET'], '/', [MainController::class, 'PageHome']),

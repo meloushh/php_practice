@@ -1,6 +1,9 @@
 <?php
 
 require_once 'models.php';
+use Framework\App;
+use Framework\HtmlResponse;
+use Framework\RedirectResponse;
 
 class DocumentController {
     protected int $auth_user_id = 0;
@@ -18,7 +21,7 @@ class DocumentController {
     function PageAllDocs() {
         $docs = Document::GetAll('WHERE user_id = ?', [$this->auth_user_id]);
 
-        return new HtmlResponse(__DIR__.'/frontend/documents.php', [
+        return new HtmlResponse(BASE_DIR.'/jinsei/fe/documents.php', [
             'documents' => $docs,
             'doc_id' => 0
         ])->Send();
@@ -40,7 +43,7 @@ class DocumentController {
         if (isset($docs[$id])===false)
             throw new Exception("Document with id {$id} doesn't exist");
 
-        return new HtmlResponse(__DIR__.'/frontend/homepage.php', [
+        return new HtmlResponse(__DIR__.'/fe/homepage.php', [
             'documents' => $docs,
             'doc_id' => $id
         ])->Send();

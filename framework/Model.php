@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class Model {
     static string $table = 'documents';
     static array $columns = [];

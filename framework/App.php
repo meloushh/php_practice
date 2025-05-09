@@ -7,23 +7,23 @@ use FastRoute;
 use Throwable;
 use Exception;
 
-function SetupErrorHandling() {
-    set_error_handler('ErrorHandler');
-    set_exception_handler('ExceptionHandler');
-}
-
-function ExceptionHandler(Throwable $e): void {
-    DumpDie($e);
-}
-
-function ErrorHandler(int $errno, string $errstr, string $errfile = '', 
-    int $errline = 0, array $errcontext = []): bool 
-{
-    DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
-}
-
 class App {
     public static App $si;
+
+    public static function SetupErrorHandling() {
+        set_error_handler('Framework\App::ErrorHandler');
+        set_exception_handler('Framework\App::ExceptionHandler');
+    }
+
+    public static function ExceptionHandler(Throwable $e): void {
+        DumpDie($e);
+    }
+
+    public static function ErrorHandler(int $errno, string $errstr, string $errfile = '', 
+        int $errline = 0, array $errcontext = []): bool 
+    {
+        DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
+    }
     
 
 
@@ -197,6 +197,14 @@ class App {
         return (int)$val;
     }
 
+    function Url($uri) {
+        $return = App::$si->request->protocol . '://' . App::$si->base_url;
+        if ($uri[0] !== '/') {
+            $return .= '/';
+        }
+        $return .= $uri;
+        return $return;
+    }
 }
 
 ?>

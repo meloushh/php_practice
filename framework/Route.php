@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class Route {
     public array $methods;
     public string $uri;

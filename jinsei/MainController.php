@@ -1,10 +1,13 @@
 <?php
 
 require_once 'models.php';
+use Framework\App;
+use Framework\HtmlResponse;
+use Framework\RedirectResponse;
 
 class MainController {
     function PageHome() {
-        return new HtmlResponse(__DIR__.'/frontend/homepage.php', [])->Send();
+        return new HtmlResponse(__DIR__.'/fe/homepage.php', [])->Send();
     }
 
     function Login() {
@@ -24,7 +27,7 @@ class MainController {
     }
 
     function PageRegister() {
-        return new HtmlResponse(__DIR__.'/frontend/register.php', [])->Send();
+        return new HtmlResponse(__DIR__.'/fe/register.php', [])->Send();
     }
 
     function Register() {

@@ -3,11 +3,6 @@
 use Framework\App;
 use Framework\Migration;
 
-$migrations = [
-    CreateUsers::class,
-    CreateDocuments::class
-];
-
 class CreateUsers extends Migration {
     function up() {
         $db = App::$si->db;

@@ -1,6 +1,6 @@
 <?php
 
-require_once BASEDIR.'/framework/Model.php';
+use Framework\Model;
 
 class Document extends Model {
     static string $table = 'documents';

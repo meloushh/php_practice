@@ -1,7 +1,11 @@
+<?php
+use Framework\App;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" type="text/css" href="/jinsei/frontend/reset.css">
-<link rel="stylesheet" type="text/css" href="/jinsei/frontend/app.css">
+<link rel="stylesheet" type="text/css" href="/jinsei/fe/reset.css">
+<link rel="stylesheet" type="text/css" href="/jinsei/fe/app.css">
 <title><?= App::$si->name ?></title>
 </head>
 <body class="bg1">

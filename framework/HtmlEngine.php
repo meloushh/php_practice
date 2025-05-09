@@ -1,6 +1,9 @@
 <?php
 
+namespace Framework;
+
 require_once 'functions.php';
+use Exception;
 
 class HtmlEngine {
     static function Render(string $path, array $data, bool $return_no_out = false) {
@@ -25,7 +28,7 @@ class HtmlEngine {
         if (strpos($page, '@extends') !== false) {
             $template_path = GetStringBetween($page, "@extends('", "')");
 
-            require BASEDIR.$template_path;
+            require BASE_DIR.$template_path;
             $output = ob_get_contents();
             ob_clean();
         }

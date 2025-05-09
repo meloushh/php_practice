@@ -1,4 +1,4 @@
-@extends('/jinsei/frontend/web_template.php')
+@extends('/jinsei/fe/web_template.php')
 
 @section_start('body')
 <div class="flex justify_center align_center" style="height: 100vh">

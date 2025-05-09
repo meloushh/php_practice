@@ -1,6 +1,7 @@
 <?php
 
 namespace Framework;
+
 use Exception;
 use SQLite3;
 use InvalidArgumentException;

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'App.php';
-
 function DumpDie(... $vars) {
     call_user_func('var_dump', $vars);
     die();
@@ -9,10 +7,6 @@ function DumpDie(... $vars) {
 
 function Dump(... $vars) {
     call_user_func('var_dump', $vars);
-}
-
-function Url($uri) {
-    return App::$si->request->protocol . '://' . App::$si->base_url . '/' . $uri;
 }
 
 function GetStringBetween(string $str, string $start, string $end, int $offset = 0) {
