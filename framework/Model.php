@@ -51,6 +51,7 @@ class Model {
         }
         $query .= ')';
 
+        // DumpDie($query);
         $db->Prepared($query, $data);
         $data['id'] = $db->sqlite->lastInsertRowID();
         

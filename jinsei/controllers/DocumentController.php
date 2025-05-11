@@ -1,6 +1,6 @@
 <?php
 
-require_once 'models.php';
+require_once APP_DIR.'/models.php';
 use Framework\App;
 use Framework\HtmlResponse;
 use Framework\RedirectResponse;
@@ -19,9 +19,18 @@ class DocumentController {
     }
 
     function PageAllDocs() {
-        $docs = Document::GetAll('WHERE user_id = ?', [$this->auth_user_id]);
+        $request = App::$si->request;
+        $q = 'WHERE user_id = ?';
+        $data = [$this->auth_user_id];
 
-        return new HtmlResponse(BASE_DIR.'/jinsei/fe/documents.php', [
+        if (isset($request->get_params['doc_name'])) {
+            $q .= " AND title LIKE '%' || ? || '%'";
+            $data[] = $request->get_params['doc_name'];
+        }
+
+        $docs = Document::GetAll($q, $data);
+
+        return new HtmlResponse(APP_DIR.'/fe/documents.php', [
             'documents' => $docs,
             'doc_id' => 0
         ])->Send();
@@ -43,7 +52,7 @@ class DocumentController {
         if (isset($docs[$id])===false)
             throw new Exception("Document with id {$id} doesn't exist");
 
-        return new HtmlResponse(__DIR__.'/fe/homepage.php', [
+        return new HtmlResponse(APP_DIR.'/fe/documents.php', [
             'documents' => $docs,
             'doc_id' => $id
         ])->Send();

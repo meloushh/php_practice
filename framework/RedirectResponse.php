@@ -7,10 +7,10 @@ require_once 'constants.php';
 class RedirectResponse extends Response {
     function __construct(
         public string $uri,
-        public string $message = ''
+        public string $notification = ''
     ) {
-        if (strlen($this->message) > 0) {
-            SetCookie('message', $this->message, 0);
+        if (strlen($this->notification) > 0) {
+            SetCookie('notification', $this->notification, 0);
         }
 
         $this->headers[HEADER_LOCATION] = $uri;

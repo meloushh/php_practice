@@ -1,8 +1,5 @@
 /** @type {HTMLInputElement} */
 let editor = document.getElementById('editor');
-let delete_doc_btn = document.getElementById('delete_doc');
-let confirm_window = document.getElementById('confirmation_window');
-let confirm_window_no = document.querySelector('#no');
 
 /** @param {KeyboardEvent} event */
 editor.addEventListener('keydown', (event) => {
@@ -15,11 +12,28 @@ editor.addEventListener('keydown', (event) => {
     }
 });
 
-delete_doc_btn.addEventListener('click', (event) => {
-    confirm_window.classList.remove('hidden');
-});
 
-confirm_window_no.addEventListener('click', (event) => {
-    confirm_window.classList.add('hidden');
-});
 
+
+let delete_doc_btn = document.getElementById('delete_doc');
+if (delete_doc_btn) {
+    let confirm_window = document.getElementById('confirmation_window');
+    let confirm_window_no = document.querySelector('#no');
+    delete_doc_btn.addEventListener('click', (event) => {
+        confirm_window.classList.remove('hidden');
+    });
+    confirm_window_no.addEventListener('click', (event) => {
+        confirm_window.classList.add('hidden');
+    });
+}
+
+
+
+let active_doc = document.getElementById('active_doc');
+console.log(active_doc);
+if (active_doc) {
+    active_doc.scrollIntoView({
+        behavior: 'instant',
+        block: 'center'
+    });
+}

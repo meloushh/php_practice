@@ -1,7 +1,7 @@
 <?php
 
-require_once 'MainController.php';
-require_once 'DocumentController.php';
+require_once APP_DIR.'/controllers/MainController.php';
+require_once APP_DIR.'/controllers/DocumentController.php';
 use Framework\Route;
 
 $routes = [
@@ -9,6 +9,7 @@ $routes = [
     new Route(['POST'], '/login', [MainController::class, 'Login']),
     new Route(['GET'], '/register', [MainController::class, 'PageRegister']),
     new Route(['POST'], '/register', [MainController::class, 'Register']),
+    new ROute(['GET'], '/logout', [MainController::class, 'Logout']),
 
     new Route(['GET'], '/documents', [DocumentController::class, 'PageAllDocs']),
     new Route(['POST'], '/documents', [DocumentController::class, 'Create']),

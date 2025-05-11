@@ -1,0 +1,2 @@
+TO DO:
+- after pressing enter on the first line, the cursor stays on the first line

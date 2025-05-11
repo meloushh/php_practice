@@ -7,11 +7,11 @@ use Exception;
 
 class HtmlEngine {
     static function Render(string $path, array $data, bool $return_no_out = false) {
-        $message = '';
-        if (isset($_COOKIE['message'])) {
-            $message = $_COOKIE['message'];
-            unset($_COOKIE['message']);
-            App::$si->DeleteCookie('message');
+        $notification = '';
+        if (isset($_COOKIE['notification'])) {
+            $notification = $_COOKIE['notification'];
+            unset($_COOKIE['notification']);
+            App::$si->DeleteCookie('notification');
         }
 
         if (ob_start() === false) 

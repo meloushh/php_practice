@@ -1,13 +1,13 @@
 <?php
 
-require_once 'models.php';
+require_once APP_DIR.'/models.php';
 use Framework\App;
 use Framework\HtmlResponse;
 use Framework\RedirectResponse;
 
 class MainController {
     function PageHome() {
-        return new HtmlResponse(__DIR__.'/fe/homepage.php', [])->Send();
+        return new HtmlResponse(APP_DIR.'/fe/homepage.php', [])->Send();
     }
 
     function Login() {
@@ -27,7 +27,7 @@ class MainController {
     }
 
     function PageRegister() {
-        return new HtmlResponse(__DIR__.'/fe/register.php', [])->Send();
+        return new HtmlResponse(APP_DIR.'/fe/register.php', [])->Send();
     }
 
     function Register() {
@@ -43,6 +43,11 @@ class MainController {
         
         User::Create($data);
         return new RedirectResponse('/', 'Registration successful')->Send();
+    }
+
+    function Logout() {
+        App::$si->DeleteCookie('_a');
+        return new RedirectResponse('/')->Send();
     }
 }
 
