@@ -2,6 +2,8 @@
 
 namespace Framework;
 
+use InvalidArgumentException;
+
 class Model {
     static string $table = 'documents';
     static array $columns = [];
