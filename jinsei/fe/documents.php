@@ -11,7 +11,7 @@
 @section_start('body')
 <div class="flex" style="height: 92vh;">
     <!-- documents -->
-    <div id="col1" style="width: 25%; overflow-y: auto" class="p1 mr1">
+    <div id="col1" style="width: 25%; overflow-y: auto" class="p1 mr1 h100">
         <div class="flex align_center">
             <a href="/documents" class="block p1 <?= $doc_id === 0 ? 'btn2' : 'btn1' ?>" style="flex-grow: 0">+ New</a>
             <form action="/documents" method="GET" class="ml2" style="flex-grow: 4">
@@ -21,16 +21,18 @@
 
         <?php foreach ($documents as $document): ?>
             <a href="/documents/<?= $document->id ?>" <?= $doc_id === $document->id ? 'id="active_doc"' : '' ?>
-                class="block justify_between mt2 p1 <?= $doc_id === $document->id ? 'btn2' : 'btn1' ?>">
+                class="block justify_between mt2 p1 <?= $doc_id === $document->id ? 'btn2' : 'btn1' ?>" tabindex="-1">
                 <?= $document->title ?>
             </a>
         <?php endforeach; ?>
     </div>
 
     <!-- editor -->
-    <div id="col2" style="width: 75%; border-left: 2px solid var(--color10)" class="p1 pb0">
+    <div id="col2" style="width: 75%; border-left: 2px solid var(--color10)" class="h100">
 
-        <form action="/documents<?= $doc_id ? '/' . $doc_id : '' ?>" method="POST">
+        <form action="/documents<?= $doc_id ? '/' . $doc_id : '' ?>" method="POST" class="p1 pb0 h100 flex"
+            style="flex-direction: column;">
+
             <div class="flex">
                 <input type="text" name="title" class="border1 p1" placeholder="Title" style="width:400px"
                     value="<?= $doc_id ? $documents[$doc_id]->title : '' ?>" tabindex="1">
@@ -40,10 +42,12 @@
                 <?php endif ?>
             </div>
 
-            <textarea id="editor" placeholder="Content" name="content" class="border1 p1 mt2 w100" style="height: 600px"
+            <textarea id="editor" placeholder="Content" name="content" class="block border1 p1 mt2 w100" style="flex: 1 1 100%"
                 tabindex="2"><?= $doc_id ? $documents[$doc_id]->content : '' ?></textarea>
         </form>
+
     </div>
+
 </div>
 
 <?php if ($doc_id > 0): ?>

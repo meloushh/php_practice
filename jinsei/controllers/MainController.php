@@ -6,6 +6,17 @@ use Framework\HtmlResponse;
 use Framework\RedirectResponse;
 
 class MainController {
+    function __construct() {
+        $app = App::$si;
+        if ($app->GetAuthUserId() !== 0) {
+            if ($app->request->uri === '/logout') {
+                return;
+            }
+
+            return new RedirectResponse('/documents')->Send();
+        }
+    }
+
     function PageHome() {
         return new HtmlResponse(APP_DIR.'/fe/homepage.php', [])->Send();
     }

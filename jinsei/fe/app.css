@@ -143,6 +143,10 @@ input {
     width: 100%;
 }
 
+.h100 {
+    height: 100%;
+}
+
 .height_100hv {
     height: 100vh;
 }
