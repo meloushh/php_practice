@@ -89,6 +89,10 @@ input {
     background-color: var(--color4);
 }
 
+.bg4 {
+    background-color: var(--color9);
+}
+
 .border1 {
     border: 2px solid var(--color2);
     border-radius: 4px;
@@ -96,6 +100,11 @@ input {
 
 .border2 {
     border: 2px solid var(--color7);
+    border-radius: 4px;
+}
+
+.border3 {
+    border: 2px solid var(--color10);
     border-radius: 4px;
 }
 
@@ -145,14 +154,6 @@ input {
 
 .h100 {
     height: 100%;
-}
-
-.height_100hv {
-    height: 100vh;
-}
-
-.max_height_100hv {
-    max-height: 100vh;
 }
 
 .block {

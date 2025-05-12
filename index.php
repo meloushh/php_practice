@@ -7,13 +7,17 @@ require_once BASE_DIR.'/vendor/autoload.php';
 use Framework\App;
 
 // Do this now cause there might be an error while setting up App construction params
-App::SetupErrorHandling();
+App::SetupErrorHandling(APP_DIR.'/fe/error.php');
+App::$name = 'Jinsei';
+
+require_once BASE_DIR.'/jinsei/config.php';
+if ($debug) {
+    App::EnableDebugging();
+}
 
 require_once BASE_DIR.'/jinsei/routes.php';
-require_once BASE_DIR.'/jinsei/config.php';
 
 $app = new App(
-    name: 'Jinsei',
     routes: $routes,
     migrations: $migrations,
     db_path: $db_path,
@@ -21,6 +25,5 @@ $app = new App(
 );
 
 $app->Run();
-
 
 ?>

@@ -9,20 +9,38 @@ use Exception;
 
 class App {
     public static App $si;
+    public static string $error_page = '';
+    public static bool $debug = false;
+    public static string $name = '';
 
-    public static function SetupErrorHandling() {
+    public static function SetupErrorHandling(string $error_page) {
+        App::$error_page = $error_page;
+        error_reporting(0);
         set_error_handler('Framework\App::ErrorHandler');
         set_exception_handler('Framework\App::ExceptionHandler');
     }
 
     public static function ExceptionHandler(Throwable $e): void {
-        DumpDie($e);
+        if (App::$debug) {
+            DumpDie($e);
+        } else {
+            new HtmlResponse(App::$error_page, [])->Send();
+        }
     }
 
     public static function ErrorHandler(int $errno, string $errstr, string $errfile = '', 
         int $errline = 0, array $errcontext = []): bool 
     {
-        DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
+        if (App::$debug) {
+            DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
+        } else {
+            new HtmlResponse(App::$error_page, [])->Send();
+        }
+    }
+
+    public static function EnableDebugging() {
+        App::$debug = true;
+        error_reporting(E_ALL);
     }
     
 
@@ -35,7 +53,6 @@ class App {
         protected array $routes,
         protected array $migrations = [],
         protected string $db_path = '',
-        public string $name = 'AppName',
         protected string $encryption_key_path = '',
         ?Request $request = null,
     ) {
@@ -79,16 +96,24 @@ class App {
         $route_info = $dispatcher->dispatch($this->request->method, $this->request->uri);
         switch ($route_info[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                DumpDie(404);
+                new HtmlResponse(App::$error_page, [
+                    'message' => '404: Route or resource doesn\'t exist'
+                ])->Send();
                 break;
 
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                DumpDie(405);
+                new HtmlResponse(App::$error_page, [
+                    'message' => '405: HTTP method not allowed'
+                ])->Send();
                 break;
 
             case \FastRoute\Dispatcher::FOUND:
                 $controller = new $route_info[1][0];
                 call_user_func_array([$controller, $route_info[1][1]], $route_info[2]);
+                break;
+
+            default:
+                new HtmlResponse(App::$error_page, [])->Send();
                 break;
         }
     }

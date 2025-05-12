@@ -60,6 +60,10 @@ class DocumentController {
 
     function Update(int $id) {
         $doc = Document::GetOne('WHERE id = ?', [$id]);
+        if ($doc === null) {
+            throw new Exception();
+        }
+
         $req = App::$si->request;
         $doc->title = $req->post_params['title'];
         $doc->content = $req->post_params['content'];
@@ -69,7 +73,10 @@ class DocumentController {
     }
 
     function Delete($id) {
-        $doc = Document::GetOne($id);
+        $doc = Document::GetOne('WHERE id = ?', [$id]);
+        if ($doc === null) {
+            throw new Exception();
+        }
         $doc->Delete();
 
         return new RedirectResponse('/documents')->Send();

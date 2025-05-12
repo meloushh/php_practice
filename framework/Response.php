@@ -8,10 +8,10 @@ abstract class Response {
     public $status = 200;
 
     function Send() {
-        http_response_code($this->status);
         foreach ($this->headers as $key => $val) {
             header("{$key}: {$val}");
         }
+        die();
     }
 }
 

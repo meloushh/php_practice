@@ -6,7 +6,7 @@ use Framework\App;
 @section_start('body')
 <div class="flex justify_center align_center" style="height: 100vh">
     <div class="border2 p4 w100" style="max-width: 600px">
-        <p class="fs4 bold text-center">Welcome to <?= App::$si->name ?></p>
+        <p class="fs4 bold text-center">Welcome to <?= App::$name ?></p>
 
         <form action="/login" method="POST" style="display: grid; 
             grid-template-columns: max-content auto;

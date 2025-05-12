@@ -6,7 +6,7 @@ require_once 'functions.php';
 use Exception;
 
 class HtmlEngine {
-    static function Render(string $path, array $data, bool $return_no_out = false) {
+    static function Render(string $path, array $data, bool $no_output = false) {
         $notification = '';
         if (isset($_COOKIE['notification'])) {
             $notification = $_COOKIE['notification'];
@@ -55,7 +55,7 @@ class HtmlEngine {
             $output = str_replace($search, $content, $output);
         }
 
-        if ($return_no_out) {
+        if ($no_output) {
             return $output;
         } else {
             echo $output;

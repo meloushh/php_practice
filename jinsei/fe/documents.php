@@ -9,9 +9,9 @@
 @extends('/jinsei/fe/web_template.php')
 
 @section_start('body')
-<div class="flex" style="height: 92vh;">
+<div class="flex" style="height: 92vh">
     <!-- documents -->
-    <div id="col1" style="width: 25%; overflow-y: auto" class="p1 mr1 h100">
+    <div id="col1" style="width: 25%; overflow-y: auto" class="p1 mr1">
         <div class="flex align_center">
             <a href="/documents" class="block p1 <?= $doc_id === 0 ? 'btn2' : 'btn1' ?>" style="flex-grow: 0">+ New</a>
             <form action="/documents" method="GET" class="ml2" style="flex-grow: 4">
@@ -28,7 +28,7 @@
     </div>
 
     <!-- editor -->
-    <div id="col2" style="width: 75%; border-left: 2px solid var(--color10)" class="h100">
+    <div id="col2" style="width: 75%; border-left: 2px solid var(--color10)">
 
         <form action="/documents<?= $doc_id ? '/' . $doc_id : '' ?>" method="POST" class="p1 pb0 h100 flex"
             style="flex-direction: column;">
@@ -51,18 +51,18 @@
 </div>
 
 <?php if ($doc_id > 0): ?>
-    <div id="confirmation_window" class="hidden pos_absolute flex justify_center align_center"
-        style="width: 100%; height: 100vh; top: 0; left: 0">
+    <div id="confirmation_window" class="hidden pos_absolute flex justify_center align_center w100 h100"
+        style="top: 0; left: 0">
 
-        <div class="bg2 border1 p4" style="width: 300px;">
+        <div class="bg4 border3 p4" style="width: 300px;">
             <p>Are you sure you want to delete this document (<?= $documents[$doc_id]->title ?>)?</p>
             <form action="/documents/<?= $doc_id ?>/del" method="POST" class="mt2 flex justify_end">
-                <input type="submit" value="Yes" class="btn1 p1">
-                <button type="button" id="no" class="btn1 ml2 p1">No</button>
+                <input type="submit" value="Yes" class="btn1 py1 px2">
+                <button type="button" id="no" class="btn1 ml2 py1 px2">No</button>
             </form>
         </div>
     </div>
 <?php endif ?>
 
-<script src="/jinsei/fe/documents.js"></script>
+<script src="/jinsei/fe/js/documents.js"></script>
 @section_end

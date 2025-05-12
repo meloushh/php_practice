@@ -64,7 +64,7 @@ class Model {
         $query = 'UPDATE '.static::$table.' SET ';
         
         $i = 0;
-        foreach ($this->columns as $column) {
+        foreach (static::$columns as $column) {
             if ($i > 0)
                 $query .= ', ';
 
@@ -86,7 +86,7 @@ class Model {
 
     function ColumnsToAssocArr() : array {
         $data = [];
-        foreach ($this->columns as $column) {
+        foreach (static::$columns as $column) {
             $data[$column] = $this->$column;
         }
         return $data;

@@ -10,5 +10,6 @@ class HtmlResponse extends Response {
 
     function Send() {
         HtmlEngine::Render($this->path, $this->data);
+        parent::Send();
     }
 }

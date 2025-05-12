@@ -54,6 +54,7 @@ class Migrator {
                 continue;
 
             $db->Exec("BEGIN TRANSACTION");
+            
             /** @var Migration */
             $inst = new $migration_class();
             $inst->up();
