@@ -1,2 +1,0 @@
-TO DO:
-- redirect authenticated users from login and register to documents
