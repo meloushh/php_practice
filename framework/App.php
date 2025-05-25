@@ -3,6 +3,7 @@
 namespace Framework;
 
 require_once 'functions.php';
+require_once 'HtmlResponse.php';
 use FastRoute;
 use Throwable;
 use Exception;
