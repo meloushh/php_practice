@@ -6,6 +6,7 @@ require_once 'functions.php';
 use FastRoute;
 use Throwable;
 use Exception;
+use Framework\HtmlResponse;
 
 class App {
     public static App $si;
