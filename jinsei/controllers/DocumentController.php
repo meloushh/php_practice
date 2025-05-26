@@ -34,7 +34,7 @@ class DocumentController {
             'documents' => $docs,
             'doc_id' => 0
         ]);
-        return $response->Send();
+        $response->Send();
     }
 
     function Create() {
@@ -45,7 +45,7 @@ class DocumentController {
         $doc = Document::Create($data);
         
         $response = new RedirectResponse('/documents/'.$doc->id);
-        return $response->Send();
+        $response->Send();
     }
 
     function PageOneDoc(int $id) {
@@ -58,7 +58,7 @@ class DocumentController {
             'documents' => $docs,
             'doc_id' => $id
         ]);
-        return $response->Send();
+        $response->Send();
     }
 
     function Update(int $id) {
@@ -73,7 +73,7 @@ class DocumentController {
         $doc->Update();
 
         $response = new RedirectResponse($req->uri);
-        return $response->Send();
+        $response->Send();
     }
 
     function Delete($id) {
@@ -84,6 +84,6 @@ class DocumentController {
         $doc->Delete();
 
         $response = new RedirectResponse('/documents');
-        return $response->Send();
+        $response->Send();
     }
 }

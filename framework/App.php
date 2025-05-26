@@ -25,7 +25,7 @@ class App {
             DumpDie($e);
         } else {
             $response = new HtmlResponse(App::$error_page, []);
-            return $response->Send();
+            $response->Send();
         }
     }
 
@@ -36,7 +36,7 @@ class App {
             DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
         } else {
             $response = new HtmlResponse(App::$error_page, []);
-            return $response->Send();
+            $response->Send();
         }
     }
 
@@ -101,14 +101,14 @@ class App {
                 $response = new HtmlResponse(App::$error_page, [
                     'message' => '404: Route or resource doesn\'t exist'
                 ]);
-                return $response->Send();
+                $response->Send();
                 break;
 
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 $response = new HtmlResponse(App::$error_page, [
                     'message' => '405: HTTP method not allowed'
                 ]);
-                return $response->Send();
+                $response->Send();
                 break;
 
             case \FastRoute\Dispatcher::FOUND:
@@ -118,7 +118,7 @@ class App {
 
             default:
                 $response = new HtmlResponse(App::$error_page, []);
-                return $response->Send();
+                $response->Send();
                 break;
         }
     }

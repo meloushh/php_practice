@@ -15,13 +15,14 @@ class MainController {
             }
 
             $response = new RedirectResponse('/documents');
-            return $response->Send();
+            $response->Send();
+            return;
         }
     }
 
     function PageHome() {
         $response = new HtmlResponse(APP_DIR.'/fe/homepage.php', []);
-        return $response->Send();
+        $response->Send();
     }
 
     function Login() {
@@ -33,18 +34,19 @@ class MainController {
             || password_verify($req->post_params['password'], $user->password) === false
         ) {
             $response = new RedirectResponse('/', 'Invalid credentials');
-            return $response->Send();
+            $response->Send();
+            return;
         }
 
         $result = App::$si->Encrypt($user->id);
         App::$si->SetCookie('_a', $result, 0);
         $response = new RedirectResponse('/documents');
-        return $response->Send();
+        $response->Send();
     }
 
     function PageRegister() {
         $response = new HtmlResponse(APP_DIR.'/fe/register.php', []);
-        return $response->Send();
+        $response->Send();
     }
 
     function Register() {
@@ -52,7 +54,8 @@ class MainController {
 
         if ($req->post_params['password'] !== $req->post_params['repeat_password']) {
             $response = new RedirectResponse('/register', 'Passwords don\'t match');
-            return $response->Send();
+            $response->Send();
+            return;
         }
 
         $data = $req->post_params;
@@ -61,13 +64,13 @@ class MainController {
         
         User::Create($data);
         $response = new RedirectResponse('/', 'Registration successful');
-        return $response->Send();
+        $response->Send();
     }
 
     function Logout() {
         App::$si->DeleteCookie('_a');
         $response = new RedirectResponse('/');
-        return $response->Send();
+        $response->Send();
     }
 }
 
