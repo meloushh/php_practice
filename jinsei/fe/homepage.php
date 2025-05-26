@@ -11,14 +11,14 @@ use Framework\App;
         <form action="/login" method="POST" style="display: grid; 
             grid-template-columns: max-content auto;
             row-gap: var(--size2);
-            justify-items: center;" 
+            justify-items: left;" 
             class="mt2">
 
             <label class="p2 pl0">Email*</label>
             <input type="text" name="email" class="border1 block p2 w100">
             <label class="p2 pl0">Password*</label>
             <input type="password" name="password" class="border1 block p2 w100">
-            <input type="submit" value="Login" class="btn1 p1" style="grid-column-start: span 2">
+            <input type="submit" value="Login" class="btn1 p1" style="grid-column-start: span 2; justify-self: center;">
         </form>
 
         <p class="mt3 text-center">
