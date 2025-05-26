@@ -4,17 +4,20 @@ namespace Framework;
 
 use Framework\App;
 use Migration;
-use MigrationDBModel;
+use Framework\MigrationDBModel;
 use DateTime;
 
 class Migrator {
     /** @var string[] */
     private array $migrations_classes;
+    private string $path;
 
     /** 
      * @param string[] $migration_classes
     */
-    function __construct($migration_classes) {
+    function __construct($migration_classes, $path) {
+        $this->path = $path;
+        require_once $this->path;
         $this->migrations_classes = $migration_classes;
 
         $db = App::$si->db;

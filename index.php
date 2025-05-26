@@ -20,6 +20,7 @@ require_once BASE_DIR.'/jinsei/routes.php';
 $app = new App(
     routes: $routes,
     migrations: $migrations,
+    migrations_path: APP_DIR.'/migrations/migrations.php',
     db_path: $db_path,
     encryption_key_path: $encryption_key_path,
 );

@@ -54,6 +54,7 @@ class App {
     function __construct(
         protected array $routes,
         protected array $migrations = [],
+        protected string $migrations_path = '',
         protected string $db_path = '',
         protected string $encryption_key_path = '',
         ?Request $request = null,
@@ -139,13 +140,13 @@ class App {
         $cmd = $_SERVER['argv'][1];
         switch ($cmd) {
             case  $commands[0]: {
-                $migrator = new Migrator($this->migrations);
+                $migrator = new Migrator($this->migrations, $this->migrations_path);
                 $migrator->up();
                 break;
             }
             
             case $commands[1]:
-                $migrator = new Migrator($this->migrations);
+                $migrator = new Migrator($this->migrations, $this->migrations_path);
                 $migrator->down();
                 break;
 
