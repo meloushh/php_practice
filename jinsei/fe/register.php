@@ -21,7 +21,7 @@
         </form>
 
         <p class="mt3 text-center">
-            <a href="/">Back to login</a>
+            <a href="/" class="a">Back to login</a>
         </p>
     </div>
 </div>
