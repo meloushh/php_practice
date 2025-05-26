@@ -24,7 +24,8 @@ class App {
         if (App::$debug) {
             DumpDie($e);
         } else {
-            new HtmlResponse(App::$error_page, [])->Send();
+            $response = new HtmlResponse(App::$error_page, []);
+            return $response->Send();
         }
     }
 
@@ -34,7 +35,8 @@ class App {
         if (App::$debug) {
             DumpDie($errno, $errstr, $errfile, $errline, $errcontext);
         } else {
-            new HtmlResponse(App::$error_page, [])->Send();
+            $response = new HtmlResponse(App::$error_page, []);
+            return $response->Send();
         }
     }
 
@@ -96,15 +98,17 @@ class App {
         $route_info = $dispatcher->dispatch($this->request->method, $this->request->uri);
         switch ($route_info[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                new HtmlResponse(App::$error_page, [
+                $response = new HtmlResponse(App::$error_page, [
                     'message' => '404: Route or resource doesn\'t exist'
-                ])->Send();
+                ]);
+                return $response->Send();
                 break;
 
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                new HtmlResponse(App::$error_page, [
+                $response = new HtmlResponse(App::$error_page, [
                     'message' => '405: HTTP method not allowed'
-                ])->Send();
+                ]);
+                return $response->Send();
                 break;
 
             case \FastRoute\Dispatcher::FOUND:
@@ -113,7 +117,8 @@ class App {
                 break;
 
             default:
-                new HtmlResponse(App::$error_page, [])->Send();
+                $response = new HtmlResponse(App::$error_page, []);
+                return $response->Send();
                 break;
         }
     }

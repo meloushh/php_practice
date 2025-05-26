@@ -30,10 +30,11 @@ class DocumentController {
 
         $docs = Document::GetAll($q, $data);
 
-        return new HtmlResponse(APP_DIR.'/fe/documents.php', [
+        $response = new HtmlResponse(APP_DIR.'/fe/documents.php', [
             'documents' => $docs,
             'doc_id' => 0
-        ])->Send();
+        ]);
+        return $response->Send();
     }
 
     function Create() {
@@ -43,7 +44,8 @@ class DocumentController {
         $data['user_id'] = $this->auth_user_id;
         $doc = Document::Create($data);
         
-        return new RedirectResponse('/documents/'.$doc->id)->Send();
+        $response = new RedirectResponse('/documents/'.$doc->id);
+        return $response->Send();
     }
 
     function PageOneDoc(int $id) {
@@ -52,10 +54,11 @@ class DocumentController {
         if (isset($docs[$id])===false)
             throw new Exception("Document with id {$id} doesn't exist");
 
-        return new HtmlResponse(APP_DIR.'/fe/documents.php', [
+        $response = new HtmlResponse(APP_DIR.'/fe/documents.php', [
             'documents' => $docs,
             'doc_id' => $id
-        ])->Send();
+        ]);
+        return $response->Send();
     }
 
     function Update(int $id) {
@@ -69,7 +72,8 @@ class DocumentController {
         $doc->content = $req->post_params['content'];
         $doc->Update();
 
-        return new RedirectResponse($req->uri)->Send();
+        $response = new RedirectResponse($req->uri);
+        return $response->Send();
     }
 
     function Delete($id) {
@@ -79,6 +83,7 @@ class DocumentController {
         }
         $doc->Delete();
 
-        return new RedirectResponse('/documents')->Send();
+        $response = new RedirectResponse('/documents');
+        return $response->Send();
     }
 }
