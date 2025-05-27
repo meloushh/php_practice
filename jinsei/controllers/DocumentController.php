@@ -23,9 +23,9 @@ class DocumentController {
         $q = 'WHERE user_id = ?';
         $data = [$this->auth_user_id];
 
-        if (isset($request->get_params['doc_name'])) {
+        if (isset($request->get['doc_name'])) {
             $q .= " AND title LIKE '%' || ? || '%'";
-            $data[] = $request->get_params['doc_name'];
+            $data[] = $request->get['doc_name'];
         }
 
         $docs = Document::GetAll($q, $data);
@@ -40,7 +40,7 @@ class DocumentController {
     function Create() {
         $request = App::$si->request;
 
-        $data = $request->post_params;
+        $data = $request->post;
         $data['user_id'] = $this->auth_user_id;
         $doc = Document::Create($data);
         
@@ -68,8 +68,8 @@ class DocumentController {
         }
 
         $req = App::$si->request;
-        $doc->title = $req->post_params['title'];
-        $doc->content = $req->post_params['content'];
+        $doc->title = $req->post['title'];
+        $doc->content = $req->post['content'];
         $doc->Update();
 
         $response = new RedirectResponse($req->uri);

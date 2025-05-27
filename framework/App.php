@@ -83,8 +83,8 @@ class App {
             $this->request->method = $_SERVER['REQUEST_METHOD'];
             $this->request->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             $this->request->headers = getallheaders();
-            $this->request->get_params = $_GET;
-            $this->request->post_params = $_POST;
+            $this->request->get = $_GET;
+            $this->request->post = $_POST;
             $this->request->protocol = str_contains($_SERVER['SERVER_PROTOCOL'], 'HTTP/') ? 'http' : 'https';
             $this->request->body = file_get_contents('php://input');
         }
