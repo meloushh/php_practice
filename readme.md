@@ -1,6 +1,7 @@
 # Test environment
 You can try out the website at:
 
+TEMPORARILY DOWN DUE TO ONGOING RECONFIG OF THE SERVER
 https://phpstack-1469427-5550645.cloudwaysapps.com/
 
 # Strategy
